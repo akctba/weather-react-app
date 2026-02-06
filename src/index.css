@@ -87,7 +87,7 @@ main {
     border-radius: 12px;
     padding: 10px 14px;
     margin: 6px 0 16px;
-    box-shadow: 3px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 6px 0 0 rgba(0, 0, 0, 0.2);
 }
 
 .error-message {
