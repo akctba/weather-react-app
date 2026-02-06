@@ -1,5 +1,21 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Setup
+
+### Environment Variables
+
+This application requires an OpenWeatherMap API key to function. Follow these steps to set it up:
+
+1. Get your API key from [OpenWeatherMap](https://openweathermap.org/api)
+2. Create a `.env` file in the root directory of the project
+3. Add your API key to the `.env` file:
+   ```
+   REACT_APP_OPENWEATHER_KEY=your_actual_api_key_here
+   ```
+4. The `.env` file is already in `.gitignore` and will not be committed to the repository
+
+**Note:** A `.env.example` file is provided as a template. Never commit your actual API key to version control.
+
 ## Available Scripts
 
 In the project directory, you can run:

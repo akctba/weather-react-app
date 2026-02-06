@@ -4,7 +4,7 @@ import { Provider } from "./Context"; // Import Provider from Context.js
 
 import './index.css';
 const api = {
-    key: "720b1a41660c87e3beb3873ed2143b01",
+    key: process.env.REACT_APP_OPENWEATHER_KEY,
     base: "https://api.openweathermap.org/data/2.5/"
 }
 
