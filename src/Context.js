@@ -28,7 +28,10 @@ const loadWeather = (place) => {
     fetch(`${api.base}weather?q=${place}&units=metric&APPID=${api.key}`)
     .then(res => res.json())
     .then(result => {
-        console.log(result);
+        if (process.env.NODE_ENV === 'development') {
+            console.log(result);
+        }
+
         return result;
     });
 }
@@ -53,14 +56,14 @@ export class Provider extends React.Component {
                 fetch(`${api.base}weather?lat=${lat}&lon=${lon}&units=metric&APPID=${api.key}`)
                     .then(res => res.json())
                     .then(result => {
-                        console.log(result);
+                        process.env.NODE_ENV === 'development' && console.log(result);
                         //return result;
                         this.setState({weather: result});
                     });
 
             });
           } else {
-            console.log("Geolocation is not supported by this browser.");
+              process.env.NODE_ENV === 'development' && console.warn("Geolocation is not supported by this browser.");
           }
     }
 

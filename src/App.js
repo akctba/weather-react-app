@@ -22,7 +22,10 @@ function App() {
             .then(result => {
                 setWeather(result)
                 setQuery('');
-                console.log(result);
+                if (process.env.NODE_ENV === 'development') {
+                    console.log(result);
+                }
+
             })
             .finally(() => setLoading(false));
         }
