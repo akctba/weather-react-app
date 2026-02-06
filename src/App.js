@@ -4,7 +4,7 @@ import { Provider } from "./Context"; // Import Provider from Context.js
 
 import './index.css';
 const api = {
-    key: "720b1a41660c87e3beb3873ed2143b01",
+    key: process.env.REACT_APP_OPENWEATHER_KEY,
     base: "https://api.openweathermap.org/data/2.5/"
 }
 
@@ -13,19 +13,36 @@ function App() {
     const [query, setQuery] = useState('');
     const [weather, setWeather] = useState({});
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const search = evt => {
         if (evt.key === "Enter") {
             setLoading(true);
+            setError(null); // Clear previous errors
             fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.json();
+            })
             .then(result => {
-                setWeather(result)
+                // Check for API-level errors
+                if (result.cod && result.cod !== 200) {
+                    throw new Error(result.message || 'City not found');
+                }
+                
+                setWeather(result);
                 setQuery('');
                 if (process.env.NODE_ENV === 'development') {
                     console.log(result);
                 }
 
+            })
+            .catch(error => {
+                console.error('Error fetching weather:', error);
+                setError(error.message || 'Failed to fetch weather data');
+                setWeather({}); // Clear previous weather data
             })
             .finally(() => setLoading(false));
         }
@@ -63,6 +80,11 @@ function App() {
                     <div className="loading" role="status" aria-live="polite">
                         <span className="loading__spinner" aria-hidden="true" />
                         <span className="loading__text">Loading...</span>
+                    </div>
+                )}
+                {error && (
+                    <div className="error-box" role="alert">
+                        <p className="error-message">{error}</p>
                     </div>
                 )}
                 {(typeof weather.main !== "undefined") ? (
