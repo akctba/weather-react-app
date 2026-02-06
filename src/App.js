@@ -12,16 +12,19 @@ function App() {
 
     const [query, setQuery] = useState('');
     const [weather, setWeather] = useState({});
+    const [loading, setLoading] = useState(false);
 
     const search = evt => {
         if (evt.key === "Enter") {
+            setLoading(true);
             fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
             .then(res => res.json())
             .then(result => {
                 setWeather(result)
                 setQuery('');
                 console.log(result);
-            });
+            })
+            .finally(() => setLoading(false));
         }
     }
 
@@ -53,6 +56,12 @@ function App() {
                     />
                 </div>
                 <LanguageCombo default="en" />
+                {loading && (
+                    <div className="loading" role="status" aria-live="polite">
+                        <span className="loading__spinner" aria-hidden="true" />
+                        <span className="loading__text">Loading...</span>
+                    </div>
+                )}
                 {(typeof weather.main !== "undefined") ? (
                     <div className="location-box">
                         <div className="location">{weather.name}, {weather.sys.country}</div>
