@@ -34,7 +34,9 @@ function App() {
                 
                 setWeather(result);
                 setQuery('');
-                console.log(result);
+                if (process.env.NODE_ENV === "development") {
+                    console.log(result);
+                }
             })
             .catch(error => {
                 console.error('Error fetching weather:', error);

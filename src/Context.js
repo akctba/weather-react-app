@@ -36,7 +36,9 @@ const loadWeather = (place) => {
             if (result.cod && result.cod !== 200) {
                 throw new Error(result.message || 'Weather data not available');
             }
-            console.log(result);
+            if (process.env.NODE_ENV === "development") {
+                console.log(result);
+            }
             return result;
         })
         .catch(error => {
@@ -76,7 +78,9 @@ export class Provider extends React.Component {
                             if (result.cod && result.cod !== 200) {
                                 throw new Error(result.message);
                             }
-                            console.log(result);
+                            if (process.env.NODE_ENV === "development") {
+                                console.log(result);
+                            }
                             this.setState({weather: result});
                         })
                         .catch(error => {
@@ -107,7 +111,9 @@ export class Provider extends React.Component {
                 }
             );
         } else {
-            console.log("Geolocation is not supported by this browser.");
+            if (process.env.NODE_ENV === "development") {
+                console.log("Geolocation is not supported by this browser.");
+            }
             this.setState({error: "Geolocation not supported"});
         }
     }
