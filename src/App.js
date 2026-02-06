@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import LanguageCombo from './LanguageCombo';
+import { Provider } from "./Context"; // Import Provider from Context.js
+
 import './index.css';
 const api = {
     key: "720b1a41660c87e3beb3873ed2143b01",
@@ -34,7 +37,10 @@ function App() {
         return `${day}, ${date} ${month} ${year}`;
     }
 
+    
+
     return (
+        <Provider>
         <div className="app">
             <main>
                 <div className="search-box" >
@@ -46,17 +52,25 @@ function App() {
                     onKeyPress={search}
                     />
                 </div>
-                {(typeof weather.main != "undefined") ? (
+                <LanguageCombo default="en" />
+                {(typeof weather.main !== "undefined") ? (
                     <div className="location-box">
                         <div className="location">{weather.name}, {weather.sys.country}</div>
                         <div className="date">{dateBuilder(new Date())}</div>
                         <div className="temp">{Math.round(weather.main.temp)}&#8451;</div>
-                        <div className="weather">{weather.weather[0].main}</div>
+                        <div className="weather">
+                            <img alt={weather.weather[0].description}
+                                src={"https://openweathermap.org/img/wn/"+weather.weather[0].icon+"@2x.png"} />
+                            {weather.weather[0].main}
+                        </div>
                     </div>
                 ) : ('')}
+
+                
             </main>
             
         </div>
+        </Provider>
     );
 }
 

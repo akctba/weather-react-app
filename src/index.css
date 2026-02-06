@@ -21,7 +21,7 @@ main {
 
 .search-box {
     width: 100%;
-    margin: 0 0 75px;
+    margin: 0 0 6px;
 }
 
 .search-box .search-bar {
@@ -99,4 +99,15 @@ main {
     text-align: center;
 }
 
+/* -- Language selector Box -- */
+
+.lang-box label {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.lang-box select {
+    background: none;
+    color: rgba(255, 255, 255, 0.5);
+    border: none;
+}
 
