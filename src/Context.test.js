@@ -214,6 +214,10 @@ describe('Context Provider', () => {
         configurable: true,
       });
 
+      // Set NODE_ENV to development to enable console.log
+      const originalEnv = process.env.NODE_ENV;
+      process.env.NODE_ENV = 'development';
+
       const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
 
       render(
@@ -227,6 +231,7 @@ describe('Context Provider', () => {
       );
 
       consoleLogSpy.mockRestore();
+      process.env.NODE_ENV = originalEnv;
 
       // Restore geolocation
       Object.defineProperty(global.navigator, 'geolocation', {
