@@ -8,6 +8,12 @@ const api = {
     base: "https://api.openweathermap.org/data/2.5/"
 }
 
+export function log (message) {
+    if (process.env.NODE_ENV === "development") {
+        console.log(message);
+    }
+}
+
 function App() {
 
     const [query, setQuery] = useState('');
@@ -34,9 +40,7 @@ function App() {
                 
                 setWeather(result);
                 setQuery('');
-                if (process.env.NODE_ENV === "development") {
-                    console.log(result);
-                }
+                log(result);
             })
             .catch(error => {
                 console.error('Error fetching weather:', error);
