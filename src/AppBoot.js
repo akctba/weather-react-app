@@ -78,7 +78,7 @@ function AppBoot() {
     </div>
 
     {/* <!-- Modal --> */}
-    <div className="modal fade" id="modalCities" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    <div className="modal fade" id="modalCities" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
