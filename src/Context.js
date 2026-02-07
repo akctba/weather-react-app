@@ -1,4 +1,5 @@
 import React from "react";
+import { log } from "./App";
 
 const Context = React.createContext();
 
@@ -36,9 +37,7 @@ const loadWeather = (place) => {
             if (result.cod && result.cod !== 200) {
                 throw new Error(result.message || 'Weather data not available');
             }
-            if (process.env.NODE_ENV === "development") {
-                console.log(result);
-            }
+            log(result);
             return result;
         })
         .catch(error => {
@@ -78,9 +77,7 @@ export class Provider extends React.Component {
                             if (result.cod && result.cod !== 200) {
                                 throw new Error(result.message);
                             }
-                            if (process.env.NODE_ENV === "development") {
-                                console.log(result);
-                            }
+                            log(result);
                             this.setState({weather: result});
                         })
                         .catch(error => {
