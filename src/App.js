@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import LanguageCombo from './LanguageCombo';
 import { Provider } from "./Context"; // Import Provider from Context.js
+import { api } from './config/api';
 
 import './index.css';
-const api = {
-    key: process.env.REACT_APP_OPENWEATHER_KEY,
-    base: "https://api.openweathermap.org/data/2.5/"
-}
 
 export function log (message) {
     if (process.env.NODE_ENV === "development") {
