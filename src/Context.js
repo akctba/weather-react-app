@@ -1,11 +1,8 @@
 import React from "react";
+import { api } from './config/api'; 
 
 const Context = React.createContext();
 
-const api = {
-    key: process.env.REACT_APP_OPENWEATHER_KEY,
-    base: "https://api.openweathermap.org/data/2.5/"
-}
 
 const reducer = (state, action) => {
     switch (action.type) {
