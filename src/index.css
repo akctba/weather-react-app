@@ -19,9 +19,19 @@ main {
     padding: 25px;
 }
 
-.search-box {
+.search-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     width: 100%;
-    margin: 0 0 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.search-box {
+    flex: 1 1 320px;
+    width: 100%;
+    margin: 0;
 }
 
 .search-box .search-bar {
@@ -143,7 +153,7 @@ main {
     color: #FFF;
     font-size: 48px;
     font-weight: 700;
-    text-shadow: 3px 3px rgba(50, 50, 70,);
+    text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
     text-align: center;
 }
 
@@ -151,6 +161,17 @@ main {
 
 .lang-box label {
     color: rgba(255, 255, 255, 0.5);
+}
+
+.lang-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.lang-box label {
+    margin: 0;
 }
 
 .lang-box select {
