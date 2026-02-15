@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { WeatherContext } from './Context';
 import './index.css';
 
 const LANGS = [
@@ -52,12 +53,19 @@ const LANGS = [
 const FREQUENT_LANGS = LANGS.filter(e => e.freq);
 const ALL_LANGS = LANGS.filter(e => !e.freq);
 
-function languageCombo(props) {
+function LanguageCombo(props) {
+    const { language, setLanguage } = useContext(WeatherContext);
+    const selectedLanguage = language || props.default || "en";
 
     return(
         <div className="lang-box">
             <label>Language: </label>
-            <select id="language" name="language" defaultValue={props.default}>
+            <select
+                id="language"
+                name="language"
+                value={selectedLanguage}
+                onChange={(event) => setLanguage(event.target.value)}
+            >
                 <optgroup label="Frequent">
                     {FREQUENT_LANGS.map(e => <option key={"lang_"+e.code} value={e.code}>{e.lang}</option>)}
                 </optgroup>
@@ -69,6 +77,6 @@ function languageCombo(props) {
     );
 }
 
-export default languageCombo;
+export default LanguageCombo;
 
 

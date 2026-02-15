@@ -1,17 +1,53 @@
 import React from 'react';
 import { render, screen, fireEvent, wait } from '@testing-library/react';
 import App from './App';
+import { Provider } from './Context';
 
 // Mock fetch globally
 global.fetch = jest.fn();
 
+const mockGeolocation = {
+  getCurrentPosition: jest.fn(),
+};
+
 beforeEach(() => {
   // Clear all mocks before each test
   jest.clearAllMocks();
+  Object.defineProperty(global.navigator, 'geolocation', {
+    value: mockGeolocation,
+    configurable: true,
+  });
+
+  mockGeolocation.getCurrentPosition.mockImplementationOnce((success) =>
+    success({
+      coords: {
+        latitude: 51.5074,
+        longitude: -0.1278,
+      },
+    })
+  );
+
+  global.fetch.mockResolvedValueOnce({
+    ok: true,
+    status: 200,
+    json: async () => ({
+      cod: 200,
+      name: 'London',
+      sys: { country: 'GB' },
+      main: { temp: 15 },
+      weather: [{ main: 'Clear', description: 'clear sky', icon: '01d' }]
+    })
+  });
 });
 
+const renderApp = () => render(
+  <Provider>
+    <App />
+  </Provider>
+);
+
 test('renders search input', () => {
-  render(<App />);
+  renderApp();
   const searchInput = screen.getByPlaceholderText(/search/i);
   expect(searchInput).toBeInTheDocument();
 });
@@ -24,7 +60,7 @@ test('displays error message when API returns error response', async () => {
     json: async () => ({ cod: '404', message: 'city not found' })
   });
 
-  render(<App />);
+  renderApp();
   const searchInput = screen.getByPlaceholderText(/search/i);
   
   // Type a city name and press Enter
@@ -46,7 +82,7 @@ test('displays error message when API returns city not found', async () => {
     json: async () => ({ cod: '404', message: 'city not found' })
   });
 
-  render(<App />);
+  renderApp();
   const searchInput = screen.getByPlaceholderText(/search/i);
   
   // Type a city name and press Enter
@@ -64,7 +100,7 @@ test('displays error message on network failure', async () => {
   // Mock fetch to reject with network error
   global.fetch.mockRejectedValueOnce(new Error('Network error'));
 
-  render(<App />);
+  renderApp();
   const searchInput = screen.getByPlaceholderText(/search/i);
   
   // Type a city name and press Enter
@@ -82,7 +118,7 @@ test('clears error on successful search after error', async () => {
   // First, mock a failed request
   global.fetch.mockRejectedValueOnce(new Error('Network error'));
 
-  render(<App />);
+  renderApp();
   const searchInput = screen.getByPlaceholderText(/search/i);
   
   // Trigger error
