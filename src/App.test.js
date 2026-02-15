@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, wait } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
 import { Provider } from './Context';
 
@@ -68,7 +68,7 @@ test('displays error message when API returns error response', async () => {
   fireEvent.keyPress(searchInput, { key: 'Enter', code: 'Enter', charCode: 13 });
 
   // Wait for error message to appear
-  await wait(() => {
+  await waitFor(() => {
     const errorMessage = screen.getByText(/HTTP error! status: 404/i);
     expect(errorMessage).toBeInTheDocument();
   });
@@ -90,7 +90,7 @@ test('displays error message when API returns city not found', async () => {
   fireEvent.keyPress(searchInput, { key: 'Enter', code: 'Enter', charCode: 13 });
 
   // Wait for error message to appear
-  await wait(() => {
+  await waitFor(() => {
     const errorMessage = screen.getByText(/city not found/i);
     expect(errorMessage).toBeInTheDocument();
   });
@@ -108,7 +108,7 @@ test('displays error message on network failure', async () => {
   fireEvent.keyPress(searchInput, { key: 'Enter', code: 'Enter', charCode: 13 });
 
   // Wait for error message to appear
-  await wait(() => {
+  await waitFor(() => {
     const errorMessage = screen.getByText(/Network error/i);
     expect(errorMessage).toBeInTheDocument();
   });
@@ -126,7 +126,7 @@ test('clears error on successful search after error', async () => {
   fireEvent.keyPress(searchInput, { key: 'Enter', code: 'Enter', charCode: 13 });
 
   // Wait for error to appear
-  await wait(() => {
+  await waitFor(() => {
     expect(screen.getByText(/Network error/i)).toBeInTheDocument();
   });
 
@@ -148,7 +148,7 @@ test('clears error on successful search after error', async () => {
   fireEvent.keyPress(searchInput, { key: 'Enter', code: 'Enter', charCode: 13 });
 
   // Wait for error to disappear
-  await wait(() => {
+  await waitFor(() => {
     expect(screen.queryByText(/Network error/i)).not.toBeInTheDocument();
   });
 });
