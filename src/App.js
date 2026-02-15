@@ -34,8 +34,37 @@ function App() {
 
     
 
+    const getWeatherClass = (main) => {
+        if (!main) {
+            return "weather-default";
+        }
+
+        const normalized = main.toLowerCase().replace(/[^a-z]/g, "");
+        const classMap = {
+            clear: "weather-clear",
+            clouds: "weather-clouds",
+            rain: "weather-rain",
+            drizzle: "weather-drizzle",
+            thunderstorm: "weather-thunderstorm",
+            snow: "weather-snow",
+            mist: "weather-mist",
+            smoke: "weather-mist",
+            haze: "weather-mist",
+            dust: "weather-mist",
+            fog: "weather-mist",
+            sand: "weather-mist",
+            ash: "weather-mist",
+            squall: "weather-mist",
+            tornado: "weather-thunderstorm"
+        };
+
+        return classMap[normalized] || "weather-default";
+    };
+
+    const weatherClass = getWeatherClass(weather?.weather?.[0]?.main);
+
     return (
-        <div className="app">
+        <div className={`app ${weatherClass}`}>
             <main>
                 <div className="search-row">
                     <div className="search-box" >
